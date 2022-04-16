@@ -7,30 +7,30 @@ import education.cccp.mobile.room.model.User
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM user u WHERE lower(u.login)=lower(:login)")
+    @Query(value = "SELECT * FROM user u WHERE lower(u.login)=lower(:login)")
     fun findAllByLogin(login: String): LiveData<List<User?>?>?
 
-    @Query("SELECT * FROM user WHERE LOWER(email) = LOWER(:email)")
-    fun findOneByEmailIgnoreCase(email: String): User?
+    @Query(value = "SELECT * FROM user WHERE LOWER(email) = LOWER(:email)")
+    fun findOneByEmail(email: String): User?
 
     @Insert(onConflict = REPLACE)
-    fun save(user: User?)
+    fun save(user: User)
 
     @Insert(onConflict = REPLACE)
-    fun saveAll(users: List<User?>?)
+    fun saveAll(users: List<User>)
 
     @Delete
     fun delete(user: User)
 
-    @Query("DELETE FROM user WHERE user_id = :userId")
+    @Query(value = "DELETE FROM user WHERE user_id = :userId")
     fun deleteById(userId: Long)
 
-    @Query("DELETE FROM user")
+    @Query(value = "DELETE FROM user")
     fun deleteAll()
 
-    @Query("SELECT count(*) FROM user")
+    @Query(value = "SELECT count(*) FROM user")
     fun count(): Int
 
-    @Query("SELECT * FROM user")
+    @Query(value = "SELECT * FROM user")
     fun findAll(): List<User?>?
 }
