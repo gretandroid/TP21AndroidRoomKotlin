@@ -13,7 +13,7 @@ object Data {
     const val EMPTY_COLLECTION_SIZE = 0
 
     @JvmStatic
-    private val formatter by lazy {
+    val formatter by lazy {
         SimpleDateFormat(
             DATE_FORMATTER_PATTERN,
             getDefault()

@@ -9,7 +9,7 @@ import java.util.*
 data class User(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "user_id")
-    val id: Long,
+    val id: Long? = null,
     val login: String,
     val email: String,
     @ColumnInfo(name = "first_name")
