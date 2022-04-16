@@ -10,6 +10,8 @@ object Data {
     @Suppress("MemberVisibilityCanBePrivate")
     const val DATE_FORMATTER_PATTERN: String = "dd/mm/yyyy"
     const val DATA_USERS_SIZE: Int = 5
+    const val EMPTY_COLLECTION_SIZE = 0
+
     @JvmStatic
     private val formatter by lazy {
         SimpleDateFormat(
@@ -68,5 +70,5 @@ object Data {
     )
 
     @JvmStatic
-    fun findAll(): List<User> = users
+    fun getAllDataUsers(): List<User> = users
 }
