@@ -2,10 +2,17 @@ package education.cccp.mobile.room.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity(tableName = "user")
+@Entity(
+    tableName = "user",
+    indices = [
+        Index(value = ["login"], unique = true),
+        Index(value = ["email"], unique = true)
+    ]
+)
 data class User(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "user_id")

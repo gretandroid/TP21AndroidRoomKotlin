@@ -23,49 +23,49 @@ object Data {
     @JvmStatic
     private var users: MutableList<User> = mutableListOf(
         User(
-            1L,
-            "jdoe",
-            "john.doe@acme.com",
-            "John",
-            "Doe",
-            formatter.parse("10/02/2021") as Date,
-            "password"
+            id = 1L,
+            login = "john.doe",
+            email = "john.doe@acme.com",
+            firstName = "John",
+            lastName = "Doe",
+            dob = formatter.parse("10/02/1971") as Date,
+            password = "password"
         ),
         User(
-            2L,
-            "jdoe",
-            "jane.doe@acme.com",
-            "Jane",
-            "Doe",
-            formatter.parse("10/02/2020") as Date,
-            "password"
+            id = 2L,
+            login = "jane.doe",
+            email = "jane.doe@acme.com",
+            firstName = "Jane",
+            lastName = "Doe",
+            dob = formatter.parse("11/03/1972") as Date,
+            password = "password"
         ),
         User(
-            3L,
-            "jbloggs",
-            "joe.bloggs@acme.com",
-            "Joe",
-            "Bloggs",
-            formatter.parse("10/02/2019") as Date,
-            "password"
+            id = 3L,
+            login = "joe.bloggs",
+            email = "joe.bloggs@acme.com",
+            firstName = "Joe",
+            lastName = "Bloggs",
+            dob = formatter.parse("12/04/1973") as Date,
+            password = "password"
         ),
         User(
-            4L,
-            "jschmoe",
-            "joe.schmoe@acme.com",
-            "Joe",
-            "Schmoe",
-            formatter.parse("10/02/2018") as Date,
-            "password"
+            id = 4L,
+            login = "joe.schmoe",
+            email = "joe.schmoe@acme.com",
+            firstName = "Joe",
+            lastName = "Schmoe",
+            dob = formatter.parse("13/05/1974") as Date,
+            password = "password"
         ),
         User(
-            5L,
-            "dharry",
-            "dick.harry@acme.com",
-            "Dick",
-            "Harry",
-            formatter.parse("10/02/2017") as Date,
-            "password"
+            id = 5L,
+            login = "dick.harry",
+            email = "dick.harry@acme.com",
+            firstName = "Dick",
+            lastName = "Harry",
+            dob = formatter.parse("14/06/1975") as Date,
+            password = "password"
         )
     )
 

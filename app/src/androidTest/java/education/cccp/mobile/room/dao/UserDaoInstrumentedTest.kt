@@ -4,7 +4,6 @@ package education.cccp.mobile.room.dao
 import androidx.room.Room.inMemoryDatabaseBuilder
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
-import education.cccp.mobile.room.Data
 import education.cccp.mobile.room.Data.DATA_USERS_SIZE
 import education.cccp.mobile.room.Data.EMPTY_COLLECTION_SIZE
 import education.cccp.mobile.room.Data.formatter
@@ -18,18 +17,21 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
 
+
 @RunWith(AndroidJUnit4::class)
 class UserDaoInstrumentedTest {
     private lateinit var db: AppDb
     private lateinit var userDao: UserDao
-    private val user: User = User(
-        login = "user",
-        email = "user@acme.com",
-        firstName = "User",
-        lastName = "Lambda",
-        dob = formatter.parse("10/02/2016") as Date,
-        password = "password"
-    )
+    private val user: User by lazy {
+        User(
+            login = "user",
+            email = "user@acme.com",
+            firstName = "User",
+            lastName = "Lambda",
+            dob = formatter.parse("15/07/1976") as Date,
+            password = "password"
+        )
+    }
 
     @Before
     fun setUp() {
@@ -42,11 +44,19 @@ class UserDaoInstrumentedTest {
 
     @After
     fun destroy() = db.close()
-    //TODO:test save with user without id using "user"
+
+
     @Test
     fun test_save_with_correct_user() {
         assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
         userDao.save(getAllDataUsers().first())
+        assertEquals(EMPTY_COLLECTION_SIZE + 1, userDao.count())
+    }
+
+    @Test
+    fun test_save_with_correct_user_without_id() {
+        assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
+        userDao.save(user)
         assertEquals(EMPTY_COLLECTION_SIZE + 1, userDao.count())
     }
 
@@ -85,4 +95,9 @@ class UserDaoInstrumentedTest {
             assertEquals(getAllDataUsers()[index], user)
         }
     }
+    //TODO: test same login verif avec le count pas incrementé
+    //TODO: test same email verif avec le count pas incrementé
+    //TODO: test deleteById
+    //TODO: test deleteByEmail
+    //TODO: test deleteByLogin
 }
