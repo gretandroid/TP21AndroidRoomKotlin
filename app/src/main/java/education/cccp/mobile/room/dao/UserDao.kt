@@ -9,12 +9,6 @@ import education.cccp.mobile.room.model.User
 
 @Dao
 interface UserDao {
-    @Query(value = "SELECT * FROM user WHERE lower(login)=lower(:login)")
-    fun findOneByLogin(login: String): User?
-
-    @Query(value = "SELECT * FROM user WHERE LOWER(email) = LOWER(:email)")
-    fun findOneByEmail(email: String): User?
-
     @Insert(onConflict = REPLACE)
     fun save(user: User)
 
@@ -23,6 +17,12 @@ interface UserDao {
 
     @Delete
     fun delete(user: User)
+
+    @Query(value = "SELECT * FROM user WHERE lower(login)=lower(:login)")
+    fun findOneByLogin(login: String): User?
+
+    @Query(value = "SELECT * FROM user WHERE LOWER(email) = LOWER(:email)")
+    fun findOneByEmail(email: String): User?
 
     @Query(value = "DELETE FROM user WHERE user_id = :userId")
     fun deleteById(userId: Long)
