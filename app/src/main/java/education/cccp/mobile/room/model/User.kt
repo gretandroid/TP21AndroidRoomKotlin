@@ -25,6 +25,5 @@ data class User(
     val lastName: String,
     @ColumnInfo(name = "date_of_birth")
     val dob: Date,
-    @ColumnInfo(name = "password")
     val password: String,
 )

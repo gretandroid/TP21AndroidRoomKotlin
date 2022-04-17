@@ -12,6 +12,7 @@ import education.cccp.mobile.room.dao.database.AppDb
 import education.cccp.mobile.room.model.User
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -45,42 +46,91 @@ class UserDaoInstrumentedTest {
     @After
     fun destroy() = db.close()
 
-
     @Test
     fun test_save_with_correct_user() {
         assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
-        userDao.save(getAllDataUsers().first())
+        userDao.save(user = getAllDataUsers().first())
         assertEquals(EMPTY_COLLECTION_SIZE + 1, userDao.count())
     }
 
     @Test
     fun test_save_with_correct_user_without_id() {
         assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
-        userDao.save(user)
+        userDao.save(user = user)
         assertEquals(EMPTY_COLLECTION_SIZE + 1, userDao.count())
     }
+
+    @Test
+    fun test_save_user_with_already_exists_login() {
+        assertEquals(DATA_USERS_SIZE, getAllDataUsers().size)
+        assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
+        userDao.saveAll(users = getAllDataUsers())
+        assertEquals(getAllDataUsers().size, userDao.count())
+        userDao.save(user = user.copy(login = getAllDataUsers().first().login))
+        assertNotEquals(getAllDataUsers().size + 1, userDao.count())
+        assertEquals(getAllDataUsers().size, userDao.count())
+    }
+
+    @Test
+    fun test_save_user_with_already_exists_email() {
+        assertEquals(DATA_USERS_SIZE, getAllDataUsers().size)
+        assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
+        userDao.saveAll(users = getAllDataUsers())
+        assertEquals(getAllDataUsers().size, userDao.count())
+        userDao.save(user = user.copy(email = getAllDataUsers().first().email))
+        assertNotEquals(getAllDataUsers().size + 1, userDao.count())
+        assertEquals(getAllDataUsers().size, userDao.count())
+    }
+
 
     @Test
     fun test_save_all() {
         assertEquals(DATA_USERS_SIZE, getAllDataUsers().size)
         assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
-        userDao.saveAll(getAllDataUsers())
+        userDao.saveAll(users = getAllDataUsers())
         assertEquals(getAllDataUsers().size, userDao.count())
     }
 
     @Test
     fun test_delete() {
         assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
+        userDao.saveAll(users = getAllDataUsers())
+        assertEquals(DATA_USERS_SIZE, userDao.count())
+        userDao.delete(user = getAllDataUsers().first())
+        assertEquals(getAllDataUsers().size - 1, userDao.count())
+    }
+
+    @Test
+    fun test_delete_by_id() {
+        assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
         userDao.saveAll(getAllDataUsers())
         assertEquals(DATA_USERS_SIZE, userDao.count())
-        userDao.delete(getAllDataUsers().first())
+        userDao.deleteById(userId = getAllDataUsers().first().id!!)
+        assertEquals(getAllDataUsers().size - 1, userDao.count())
+    }
+
+    @Test
+    fun test_delete_by_email() {
+        assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
+        userDao.saveAll(users = getAllDataUsers())
+        assertEquals(DATA_USERS_SIZE, userDao.count())
+        userDao.deleteByEmail(email = getAllDataUsers().first().email)
+        assertEquals(getAllDataUsers().size - 1, userDao.count())
+    }
+
+    @Test
+    fun test_delete_by_login() {
+        assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
+        userDao.saveAll(users = getAllDataUsers())
+        assertEquals(DATA_USERS_SIZE, userDao.count())
+        userDao.deleteByLogin(login = getAllDataUsers().first().login)
         assertEquals(getAllDataUsers().size - 1, userDao.count())
     }
 
     @Test
     fun test_delete_all() {
         assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
-        userDao.saveAll(getAllDataUsers())
+        userDao.saveAll(users = getAllDataUsers())
         assertEquals(getAllDataUsers().size, userDao.count())
         userDao.deleteAll()
         assertEquals(EMPTY_COLLECTION_SIZE, userDao.count())
@@ -95,9 +145,4 @@ class UserDaoInstrumentedTest {
             assertEquals(getAllDataUsers()[index], user)
         }
     }
-    //TODO: test same login verif avec le count pas incrementé
-    //TODO: test same email verif avec le count pas incrementé
-    //TODO: test deleteById
-    //TODO: test deleteByEmail
-    //TODO: test deleteByLogin
 }
